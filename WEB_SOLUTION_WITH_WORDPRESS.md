@@ -52,6 +52,7 @@ sudo gdisk /dev/xvdf
 sudo gdisk /dev/xvdg
 sudo gdisk /dev/xvdh
 ```
+
 sudo gdisk /dev/xvdf
 ![image](https://user-images.githubusercontent.com/58276505/172837184-0894d495-500e-4fc2-b000-d096c445e965.png)
 
@@ -231,6 +232,7 @@ FLUSH PRIVILEGES;
 SHOW DATABASES;
 exit
 ```
+
 ### Configure WordPress to connect to remote database while ensuring that we open MySQL port 3306 on DB Server EC2.
 
 ![image](https://user-images.githubusercontent.com/58276505/172843008-86427b0d-4882-46fe-a956-fb91b28fd1d1.png)
