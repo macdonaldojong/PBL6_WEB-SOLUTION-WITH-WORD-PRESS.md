@@ -1,54 +1,63 @@
 ## WEB SOLUTION WITH WORDPRESS
-### Setup an EC2 Instance that serve as the web server
-###  Create 3 volumes in the same AZ as the Web Server EC2 where each of them is 10 GB.
-### lsblk inspect and list what block devices are attached to the server
+
+## our task:
+* The task in this project is to design a storage infrastructure on two Linux servers and implement a basic web solution using WordPress. 
+* WordPress is a free and open-source content management system written in PHP and paired with MySQL or MariaDB as its backend Relational Database Management System (RDBMS).
+
+### Project consist of implementing a Three-tier Architecture in software development
+
+Three-tier Architecture:
+* Generally, web, or mobile solutions are implemented based on what is called the Three-tier Architecture.
+* Three-tier Architecture is a client-server software architecture pattern that comprise of 3 separate layers.
+
+![image](https://user-images.githubusercontent.com/58276505/172831496-0c28b6dc-ce5b-49b8-ad0d-740445394f5b.png)
+
+#### 2 Part (I & II) 
+* Part I: Configure storage subsystem for Web and Database servers based on Linux OS. The focus of this part is to give you practical experience of working with disks, partitions and volumes in Linux.
+
+* Part II: Install WordPress and connect it to a remote MySQL database server. 
+
+## Project requirement:
+* Presentation Layer (PL): This is the user interface such as the client server or browser on your laptop.
+* Business Layer (BL): This is the backend program that implements business logic. Application or Webserver
+* Data Access or Management Layer (DAL): This is the layer for computer data storage and data access. Database Server or File System Server such as FTP server, or NFS Server
+
+### Your 3-Tier Setup
+A Laptop or PC to serve as a client
+An EC2 Linux Server as a web server (This is where you will install WordPress)
+An EC2 Linux server as a database (DB) server
+
+
+### Project implementation:
+* We will use RedHat’ (it has a fully compatible derivative)
+* Launch a Redhat instance and Create 3 volumes in the same AZ as the Web Server EC2 where each of them is 10 GB.
+
+![image](https://user-images.githubusercontent.com/58276505/172836484-14a12909-3eee-4dc6-afb1-cadc23e912ff.png)
+![image](https://user-images.githubusercontent.com/58276505/172836674-777ff97e-c73a-4b9f-bca9-97f70ba40be5.png)
+
+View or list what block devices/volumes are attached to the server
 ```
 lsblk
 ```
+
+![image](https://user-images.githubusercontent.com/58276505/172836185-8552a564-c29c-481b-99da-86d3262944f9.png)
 ### To list all mounts and free space on your Server
 ```
 df -h
 ```
-### To create a new partition on each of the 3 disks
+### To create a new partition on each of the 3 disks (The operation is repeated for the other disks xvdg and xvdh)
 ```
 sudo gdisk /dev/xvdf
 sudo gdisk /dev/xvdg
 sudo gdisk /dev/xvdh
 ```
-```
- GPT fdisk (gdisk) version 1.0.3
+sudo gdisk /dev/xvdf
+![image](https://user-images.githubusercontent.com/58276505/172837184-0894d495-500e-4fc2-b000-d096c445e965.png)
 
-Partition table scan:
-  MBR: not present
-  BSD: not present
-  APM: not present
-  GPT: not present
+View disk
+lsblk
+![image](https://user-images.githubusercontent.com/58276505/172837865-2dec026f-addf-477c-9839-0d066a77a8a1.png)
 
-Creating new GPT entries.
-
-Command (? for help branch segun-edits: p
-Disk /dev/xvdf: 20971520 sectors, 10.0 GiB
-Sector size (logical/physical): 512/512 bytes
-Disk identifier (GUID): D936A35E-CE80-41A1-B87E-54D2044D160B
-Partition table holds up to 128 entries
-Main partition table begins at sector 2 and ends at sector 33
-First usable sector is 34, last usable sector is 20971486
-Partitions will be aligned on 2048-sector boundaries
-Total free space is 2014 sectors (1007.0 KiB)
-
-Number  Start (sector)    End (sector)  Size       Code  Name
-   1            2048        20971486   10.0 GiB    8E00  Linux LVM
-
-Command (? for help): w
-
-Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
-PARTITIONS!!
-
-Do you want to proceed? (Y/N): yes
-OK; writing new GUID partition table (GPT) to /dev/xvdf.
-The operation has completed successfully.
-```
-### The operation is repeated for the other disks xvdg and xvdh
 ### Install lvm2 to check for available partitions.
 
 ```
@@ -65,7 +74,9 @@ sudo pvcreate /dev/xvdh1
 ```
 sudo pvs
 ```
-### add all 3 PVs to a volume group (VG) while Naming the VG vg-webdata
+![image](https://user-images.githubusercontent.com/58276505/172838419-d7f320e5-8694-41d4-9c70-d6c8c2aa3600.png)
+
+Use vgcreate utility to add all 3 PVs to a volume group (VG). Name the VG **webdata-vg**
 ```
 sudo vgcreate vg-webdata /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
 ```
@@ -74,25 +85,26 @@ sudo vgcreate vg-webdata /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
 ```
 sudo vgs
 ```
-
-### To work with lvcreate utility to create 2 logical volumes. apps-lv (where I worked with half of the PV size), and logs-lv while Using the remaining space of the PV size. 
-### apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs
-
+![image](https://user-images.githubusercontent.com/58276505/172838715-92a6d4ae-6807-4545-afc1-02460de48997.png)
+Use lvcreate utility to create 2 logical volumes. **apps-lv (Use half of the PV size)**, and **logs-lv Use the remaining space of the PV size**. 
+**NOTE:** apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
 ```
 sudo lvcreate -n apps-lv -L 14G vg-webdata
 sudo lvcreate -n logs-lv -L 14G vg-webdata
 ```
 
-### To Verify that your Logical Volume has been created successfully
+To Verify that your Logical Volume has been created successfully
 ```
 sudo lvs
 ```
+![image](https://user-images.githubusercontent.com/58276505/172839250-0a6b35b4-72e3-423e-9f5c-e7ed3fa58504.png)
 
 ### Verify the entire setup
 ```
 sudo vgdisplay -v #view complete setup - VG, PV, and LV
 sudo lsblk 
 ```
+![image](https://user-images.githubusercontent.com/58276505/172839353-9c6c77b0-d828-4594-942c-4b298937de56.png)
 
 ### To Use mkfs.ext4 to format the logical volumes with ext4 filesystem
 ```
@@ -133,6 +145,9 @@ sudo rsync -av /home/recovery/logs/log/. /var/log
 sudo blkid
 sudo vi /etc/fstab
 ```
+![image](https://user-images.githubusercontent.com/58276505/172839680-e8087173-c33f-4450-8310-d969f30e26b7.png)
+![image](https://user-images.githubusercontent.com/58276505/172839824-0e159346-4e46-45e9-baa5-cfc452c2ec0b.png)
+
 ### Update /etc/fstab
 
 ### Test the configuration and reload the daemon
@@ -141,30 +156,25 @@ sudo mount -a
 sudo systemctl daemon-reload
 df -h
 ```
+![image](https://user-images.githubusercontent.com/58276505/172839939-e3692c10-7b86-4569-9337-0060f6c44389.png)
 
-### Launch a second EC2 Instance as a Database Server and create 3 volumes in the same AZ as the Web Server EC2 where each of them is 10 GB.
+## PartII:
+Launch a second EC2 Instance for Database Server and create 3 volumes in the same AZ & make partition as it was done for Web Server EC2
+**Repeat steps above to create partition for DB-server too**
+
 ### create db-lv and mount it to /db directory
+```
 ### Install WordPress on Web Server EC2
-
-### Update the repository
-```
 sudo yum -y update
-```
-### Install wget, Apache and it’s dependencies
-```
+
+### Install wget, Apache and it’s dependencies**
 sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json
-```
-### Start Apache
-```
-sudo systemctl enable httpd
+
+### Start & enable Apache
 sudo systemctl start httpd
-```
-```
 sudo systemctl enable httpd
-sudo systemctl start httpd
-```
+
 ### To install PHP and it’s depemdencies
-```
 sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 sudo yum install yum-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
 sudo yum module list php
@@ -174,8 +184,8 @@ sudo yum install php php-opcache php-gd php-curl php-mysqlnd
 sudo systemctl start php-fpm
 sudo systemctl enable php-fpm
 setsebool -P httpd_execmem 1
-Restart Apache
 
+### Restart Apache
 sudo systemctl restart httpd
 ```
 ### Download wordpress and copy wordpress to var/www/html
@@ -215,14 +225,19 @@ SHOW DATABASES;
 exit
 ```
 ### Configure WordPress to connect to remote database while ensuring that we open MySQL port 3306 on DB Server EC2.
+
+![image](https://user-images.githubusercontent.com/58276505/172843008-86427b0d-4882-46fe-a956-fb91b28fd1d1.png)
+
 ### Install MySQL client and test that connectiveity from Web Server to DB server by using mysql-client
 ```
 sudo yum install mysql
 sudo mysql -u admin -p -h 172.31.39.40
+
+# Verify if you can successfully execute
+SHOW DATABASES;
 ```
-
-### Change permissions and configuration so Apache could use WordPress:
-
+**Change permissions and configuration so Apache could use WordPress:**
+* change ownwer & permit execution
 ### Enable TCP port 80 in Inbound Rules configuration for Web Server EC2 (enable from everywhere 0.0.0.0/0)
 
 Try to access from your browser the link to your WordPress http://3.17.204.32/wordpress/
