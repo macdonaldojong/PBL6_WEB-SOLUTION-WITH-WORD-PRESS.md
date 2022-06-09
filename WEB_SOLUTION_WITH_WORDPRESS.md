@@ -33,6 +33,7 @@ An EC2 Linux server as a database (DB) server
 * Launch a Redhat instance and Create 3 volumes in the same AZ as the Web Server EC2 where each of them is 10 GB.
 
 ![image](https://user-images.githubusercontent.com/58276505/172836484-14a12909-3eee-4dc6-afb1-cadc23e912ff.png)
+
 ![image](https://user-images.githubusercontent.com/58276505/172836674-777ff97e-c73a-4b9f-bca9-97f70ba40be5.png)
 
 View or list what block devices/volumes are attached to the server
@@ -74,6 +75,7 @@ sudo pvcreate /dev/xvdh1
 ```
 sudo pvs
 ```
+
 ![image](https://user-images.githubusercontent.com/58276505/172838419-d7f320e5-8694-41d4-9c70-d6c8c2aa3600.png)
 
 Use vgcreate utility to add all 3 PVs to a volume group (VG). Name the VG **webdata-vg**
@@ -85,6 +87,7 @@ sudo vgcreate vg-webdata /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
 ```
 sudo vgs
 ```
+
 ![image](https://user-images.githubusercontent.com/58276505/172838715-92a6d4ae-6807-4545-afc1-02460de48997.png)
 Use lvcreate utility to create 2 logical volumes. **apps-lv (Use half of the PV size)**, and **logs-lv Use the remaining space of the PV size**. 
 **NOTE:** apps-lv will be used to store data for the Website while, logs-lv will be used to store data for logs.
@@ -97,6 +100,7 @@ To Verify that your Logical Volume has been created successfully
 ```
 sudo lvs
 ```
+
 ![image](https://user-images.githubusercontent.com/58276505/172839250-0a6b35b4-72e3-423e-9f5c-e7ed3fa58504.png)
 
 ### Verify the entire setup
@@ -104,6 +108,7 @@ sudo lvs
 sudo vgdisplay -v #view complete setup - VG, PV, and LV
 sudo lsblk 
 ```
+
 ![image](https://user-images.githubusercontent.com/58276505/172839353-9c6c77b0-d828-4594-942c-4b298937de56.png)
 
 ### To Use mkfs.ext4 to format the logical volumes with ext4 filesystem
@@ -146,6 +151,7 @@ sudo blkid
 sudo vi /etc/fstab
 ```
 ![image](https://user-images.githubusercontent.com/58276505/172839680-e8087173-c33f-4450-8310-d969f30e26b7.png)
+
 ![image](https://user-images.githubusercontent.com/58276505/172839824-0e159346-4e46-45e9-baa5-cfc452c2ec0b.png)
 
 ### Update /etc/fstab
@@ -156,6 +162,7 @@ sudo mount -a
 sudo systemctl daemon-reload
 df -h
 ```
+
 ![image](https://user-images.githubusercontent.com/58276505/172839939-e3692c10-7b86-4569-9337-0060f6c44389.png)
 
 ## PartII:
