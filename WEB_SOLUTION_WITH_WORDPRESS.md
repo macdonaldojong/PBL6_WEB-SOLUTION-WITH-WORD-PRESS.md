@@ -36,13 +36,16 @@ An EC2 Linux server as a database (DB) server
 
 ![image](https://user-images.githubusercontent.com/58276505/172836674-777ff97e-c73a-4b9f-bca9-97f70ba40be5.png)
 
-View or list what block devices/volumes are attached to the server
+* View or list what block devices/volumes are attached to the server
+
 ```
 lsblk
 ```
 
 ![image](https://user-images.githubusercontent.com/58276505/172836185-8552a564-c29c-481b-99da-86d3262944f9.png)
+
 ### To list all mounts and free space on your Server
+
 ```
 df -h
 ```
