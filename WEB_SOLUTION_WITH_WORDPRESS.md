@@ -4,10 +4,6 @@
 * The task in this project is to design a storage infrastructure on two Linux servers and implement a basic web solution using WordPress. 
 * WordPress is a free and open-source content management system written in PHP and paired with MySQL or MariaDB as its backend Relational Database Management System (RDBMS).
 
-### Architecture Of Project / Solution:
-
-![image](https://user-images.githubusercontent.com/58276505/172155502-f8f9bb0c-432f-46a2-ae99-acd8bc6fc4b4.png)
-
 ### Project consist of implementing a Three-tier Architecture in software development
 
 Three-tier Architecture:
@@ -16,6 +12,7 @@ Three-tier Architecture:
 
 ![image](https://user-images.githubusercontent.com/58276505/172831496-0c28b6dc-ce5b-49b8-ad0d-740445394f5b.png)
 
+![image](https://user-images.githubusercontent.com/58276505/172155502-f8f9bb0c-432f-46a2-ae99-acd8bc6fc4b4.png)
 #### 2 Part (I & II) 
 * Part I: Configure storage subsystem for Web and Database servers based on Linux OS. The focus of this part is to give you practical experience of working with disks, partitions and volumes in Linux.
 
