@@ -13,22 +13,22 @@ Three-tier Architecture:
 ![image](https://user-images.githubusercontent.com/58276505/172831496-0c28b6dc-ce5b-49b8-ad0d-740445394f5b.png)
 
 ![image](https://user-images.githubusercontent.com/58276505/172155502-f8f9bb0c-432f-46a2-ae99-acd8bc6fc4b4.png)
-#### 2 Part (I & II) 
-* Part I: Configure storage subsystem for Web and Database servers based on Linux OS. The focus of this part is to give you practical experience of working with disks, partitions and volumes in Linux.
-
-* Part II: Install WordPress and connect it to a remote MySQL database server. 
 
 ## Project requirement:
-* 1-Presentation Layer (PL): This is the user interface such as the client server or browser on your laptop.
-* 2-Business Layer (BL): This is the backend program that implements business logic. Application or Webserver
-* 3-Data Access or Management Layer (DAL): This is the layer for computer data storage and data access. Database Server or File System Server such as FTP server, or NFS Server
+* **1-Presentation Layer (PL): This is the user interface such as the client server or browser on your laptop.
+* **2-Business Layer (BL): This is the backend program that implements business logic. Application or Webserver
+* **3-Data Access or Management Layer (DAL): This is the layer for computer data storage and data access. Database Server or File System Server such as FTP server, or NFS Server
 
 ### Your 3-Tier Setup
-* 1-A Laptop or PC to serve as a client
-* 2-An EC2 Linux Server as a web server (This is where you will install WordPress)
-* 3-An EC2 Linux server as a database (DB) server
+* 1-A Laptop or PC to serve as a **client
+* 2-An EC2 Linux Server as a **web server (This is where you will install WordPress)
+* 3-An EC2 Linux server as a **database (DB) server
 
-### Project implementation:
+#### ### Project implementation: is in 2 Part (I & II) 
+
+* **Part I:** Configure storage subsystem for Web and Database servers based on Linux OS. The focus of this part is to give you practical experience of working with disks, partitions and volumes in Linux.
+* **Part II:** Install WordPress and connect it to a remote MySQL database server. 
+
 * We will use RedHat’ (it has a fully compatible derivative)
 * Launch a Redhat instance and Create 3 volumes in the same AZ as the Web Server EC2 where each of them is 10 GB.
 
