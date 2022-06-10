@@ -4,6 +4,10 @@
 * The task in this project is to design a storage infrastructure on two Linux servers and implement a basic web solution using WordPress. 
 * WordPress is a free and open-source content management system written in PHP and paired with MySQL or MariaDB as its backend Relational Database Management System (RDBMS).
 
+### Architecture Of Project / Solution:
+
+![image](https://user-images.githubusercontent.com/58276505/172155502-f8f9bb0c-432f-46a2-ae99-acd8bc6fc4b4.png)
+
 ### Project consist of implementing a Three-tier Architecture in software development
 
 Three-tier Architecture:
@@ -18,15 +22,14 @@ Three-tier Architecture:
 * Part II: Install WordPress and connect it to a remote MySQL database server. 
 
 ## Project requirement:
-* Presentation Layer (PL): This is the user interface such as the client server or browser on your laptop.
-* Business Layer (BL): This is the backend program that implements business logic. Application or Webserver
-* Data Access or Management Layer (DAL): This is the layer for computer data storage and data access. Database Server or File System Server such as FTP server, or NFS Server
+* 1-Presentation Layer (PL): This is the user interface such as the client server or browser on your laptop.
+* 2-Business Layer (BL): This is the backend program that implements business logic. Application or Webserver
+* 3-Data Access or Management Layer (DAL): This is the layer for computer data storage and data access. Database Server or File System Server such as FTP server, or NFS Server
 
 ### Your 3-Tier Setup
-A Laptop or PC to serve as a client
-An EC2 Linux Server as a web server (This is where you will install WordPress)
-An EC2 Linux server as a database (DB) server
-
+* 1-A Laptop or PC to serve as a client
+* 2-An EC2 Linux Server as a web server (This is where you will install WordPress)
+* 3-An EC2 Linux server as a database (DB) server
 
 ### Project implementation:
 * We will use RedHat’ (it has a fully compatible derivative)
